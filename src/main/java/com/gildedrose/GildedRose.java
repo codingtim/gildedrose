@@ -86,19 +86,27 @@ class GildedRose {
         @Override
         public void updateQualityOf(Item item) {
             item.sellIn = item.sellIn - 1;
-            if (item.sellIn < 0) {
+            if (expired(item)) {
                 item.quality = 0;
             } else {
                 int qualityAfterIncrease;
-                if(item.sellIn < 5) {
+                if(startsInLessThanDays(5, item)) {
                     qualityAfterIncrease = item.quality + 3;
-                } else if (item.sellIn < 10){
+                } else if (startsInLessThanDays(10, item)){
                     qualityAfterIncrease = item.quality + 2;
                 } else {
                     qualityAfterIncrease = item.quality + 1;
                 }
                 item.quality = qualityAfterIncrease > MAX_QUALITY ? MAX_QUALITY : qualityAfterIncrease;
             }
+        }
+
+        private boolean startsInLessThanDays(int days, Item item) {
+            return item.sellIn < days;
+        }
+
+        private boolean expired(Item item) {
+            return item.sellIn < 0;
         }
 
     }
