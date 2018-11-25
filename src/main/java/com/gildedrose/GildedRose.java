@@ -65,6 +65,9 @@ class GildedRose {
     }
 
     private static class AgingItemRule implements QualityRule {
+
+        private static final int MAX_QUALITY = 50;
+
         @Override
         public void updateQualityOf(Item item) {
             item.sellIn = item.sellIn - 1;
@@ -74,7 +77,7 @@ class GildedRose {
             } else {
                 qualityAfterIncrease = item.quality + 1;
             }
-            item.quality = qualityAfterIncrease > 50 ? 50 : qualityAfterIncrease;
+            item.quality = qualityAfterIncrease > MAX_QUALITY ? MAX_QUALITY : qualityAfterIncrease;
         }
     }
 
