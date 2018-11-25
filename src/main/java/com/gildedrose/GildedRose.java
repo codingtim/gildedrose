@@ -20,7 +20,7 @@ class GildedRose {
         } else if (agingItem(name)) {
             return new AgingItemRule();
         } else if (concertBackstagePass(name)) {
-            return new PassRule();
+            return new BackstagePassRule();
         } else {
             return new NormalItemRule();
         }
@@ -80,7 +80,7 @@ class GildedRose {
         }
     }
 
-    private static class PassRule implements QualityRule {
+    private static class BackstagePassRule implements QualityRule {
         @Override
         public void updateQualityOf(Item item) {
             item.sellIn = item.sellIn - 1;
