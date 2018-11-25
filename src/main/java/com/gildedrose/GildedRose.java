@@ -1,6 +1,8 @@
 package com.gildedrose;
 
 class GildedRose {
+    private static final int MAX_QUALITY = 50;
+
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -66,8 +68,6 @@ class GildedRose {
 
     private static class AgingItemRule implements QualityRule {
 
-        private static final int MAX_QUALITY = 50;
-
         @Override
         public void updateQualityOf(Item item) {
             item.sellIn = item.sellIn - 1;
@@ -82,25 +82,22 @@ class GildedRose {
     }
 
     private static class BackstagePassRule implements QualityRule {
+
         @Override
         public void updateQualityOf(Item item) {
             item.sellIn = item.sellIn - 1;
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
-                if (item.sellIn < 10) {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1;
-                    }
-                }
-
-                if (item.sellIn < 5) {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1;
-                    }
-                }
-            }
             if (item.sellIn < 0) {
-                item.quality = item.quality - item.quality;
+                item.quality = 0;
+            } else {
+                int qualityAfterIncrease;
+                if(item.sellIn < 5) {
+                    qualityAfterIncrease = item.quality + 3;
+                } else if (item.sellIn < 10){
+                    qualityAfterIncrease = item.quality + 2;
+                } else {
+                    qualityAfterIncrease = item.quality + 1;
+                }
+                item.quality = qualityAfterIncrease > MAX_QUALITY ? MAX_QUALITY : qualityAfterIncrease;
             }
         }
 
