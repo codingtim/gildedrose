@@ -141,6 +141,46 @@ public class GildedRoseTest {
         assertThat(app.items[0], isItemWith("Backstage passes to a TAFKAL80ETC concert", -1, 0));
     }
 
+    @Test
+    public void conjuredItemQualityDegradesOverTime() {
+        Item[] items = new Item[]{new Item("Conjured Mana Cake", 5, 7)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertThat(app.items[0], isItemWith("Conjured Mana Cake", 4, 5));
+        app.updateQuality();
+        assertThat(app.items[0], isItemWith("Conjured Mana Cake", 3, 3));
+    }
+
+    @Test
+    public void conjuredItemQualityDecreasesDoubleSpeedAfterSellIn() {
+        Item[] items = new Item[]{new Item("Conjured Mana Cake", 1, 6)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertThat(app.items[0], isItemWith("Conjured Mana Cake", 0, 4));
+        app.updateQuality();
+        assertThat(app.items[0], isItemWith("Conjured Mana Cake", -1, 0));
+    }
+
+    @Test
+    public void conjuredItemQualityMinimumIsZero() {
+        Item[] items = new Item[]{new Item("Conjured Mana Cake", 3, 2)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertThat(app.items[0], isItemWith("Conjured Mana Cake", 2, 0));
+        app.updateQuality();
+        assertThat(app.items[0], isItemWith("Conjured Mana Cake", 1, 0));
+    }
+
+    @Test
+    public void conjuredItemQualityMinimumIsZeroAfterSellIn() {
+        Item[] items = new Item[]{new Item("Conjured Mana Cake", 0, 3)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertThat(app.items[0], isItemWith("Conjured Mana Cake", -1, 0));
+        app.updateQuality();
+        assertThat(app.items[0], isItemWith("Conjured Mana Cake", -2, 0));
+    }
+
     private Matcher<Item> isItemWith(String name, int sellIn, int quality) {
         return new TypeSafeMatcher<Item>() {
             @Override

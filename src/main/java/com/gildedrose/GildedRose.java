@@ -23,9 +23,15 @@ class GildedRose {
             return new AgingItemRule();
         } else if (concertBackstagePass(name)) {
             return new BackstagePassRule();
+        } else if (conjuredItem(name)) {
+            return new ConjuredItemRule();
         } else {
             return new NormalItemRule();
         }
+    }
+
+    private boolean conjuredItem(String name) {
+        return name.equals("Conjured Mana Cake");
     }
 
     private boolean concertBackstagePass(String name) {
@@ -55,6 +61,12 @@ class GildedRose {
     private static class NormalItemRule extends AbstractDegradingItemRule {
         NormalItemRule() {
             super(1);
+        }
+    }
+
+    private static class ConjuredItemRule extends AbstractDegradingItemRule {
+        ConjuredItemRule() {
+            super(2);
         }
     }
 
