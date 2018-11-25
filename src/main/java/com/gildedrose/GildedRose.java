@@ -54,14 +54,13 @@ class GildedRose {
         @Override
         public void updateQualityOf(Item item) {
             item.sellIn = item.sellIn - 1;
-            if (item.quality > 0) {
-                item.quality = item.quality - 1;
-            }
+            int qualityAfterDegrade;
             if(item.sellIn < 0) {
-                if (item.quality > 0) {
-                    item.quality = item.quality - 1;
-                }
+                qualityAfterDegrade = item.quality - 2;
+            } else {
+                qualityAfterDegrade = item.quality - 1;
             }
+            item.quality = qualityAfterDegrade < 0 ? 0 : qualityAfterDegrade;
         }
     }
 
