@@ -15,15 +15,27 @@ class GildedRose {
     }
 
     private QualityRule getQualityRuleFor(String name) {
-        if (name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (legendaryItem(name)) {
             return new LegendaryItemRule();
-        } else if (name.equals("Aged Brie")) {
+        } else if (agingItem(name)) {
             return new AgingItemRule();
-        } else if (name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        } else if (concertBackstagePass(name)) {
             return new PassRule();
         } else {
             return new NormalItemRule();
         }
+    }
+
+    private boolean concertBackstagePass(String name) {
+        return name.equals("Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    private boolean agingItem(String name) {
+        return name.equals("Aged Brie");
+    }
+
+    private boolean legendaryItem(String name) {
+        return name.equals("Sulfuras, Hand of Ragnaros");
     }
 
     @FunctionalInterface
