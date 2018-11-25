@@ -52,15 +52,28 @@ class GildedRose {
         }
     }
 
-    private static class NormalItemRule implements QualityRule {
+    private static class NormalItemRule extends AbstractDegradingItemRule {
+        NormalItemRule() {
+            super(1);
+        }
+    }
+
+    private static abstract class AbstractDegradingItemRule implements QualityRule {
+
+        private int modifier;
+
+        AbstractDegradingItemRule(int modifier) {
+            this.modifier = modifier;
+        }
+
         @Override
         public void updateQualityOf(Item item) {
             item.sellIn = item.sellIn - 1;
             int qualityAfterDegrade;
             if(item.sellIn < 0) {
-                qualityAfterDegrade = item.quality - 2;
+                qualityAfterDegrade = item.quality - 2 * modifier;
             } else {
-                qualityAfterDegrade = item.quality - 1;
+                qualityAfterDegrade = item.quality - 1 * modifier;
             }
             item.quality = qualityAfterDegrade < 0 ? 0 : qualityAfterDegrade;
         }
