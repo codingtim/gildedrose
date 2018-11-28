@@ -57,15 +57,29 @@ class GildedRose {
         }
     }
 
-    private static class NormalItemRule extends AbstractDegradingItemRule {
+    private static class NormalItemRule implements QualityRule {
+        private QualityRule delegate;
         NormalItemRule() {
-            super(1);
+            delegate = new AbstractDegradingItemRule(1) {
+            };
+        }
+
+        @Override
+        public void updateQualityOf(Item item) {
+            delegate.updateQualityOf(item);
         }
     }
 
-    private static class ConjuredItemRule extends AbstractDegradingItemRule {
+    private static class ConjuredItemRule implements QualityRule {
+        private QualityRule delegate;
         ConjuredItemRule() {
-            super(2);
+            delegate = new AbstractDegradingItemRule(2) {
+            };
+        }
+
+        @Override
+        public void updateQualityOf(Item item) {
+            delegate.updateQualityOf(item);
         }
     }
 
