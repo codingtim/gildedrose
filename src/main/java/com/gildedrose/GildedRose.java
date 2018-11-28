@@ -85,10 +85,10 @@ class GildedRose {
 
     private static abstract class AbstractDegradingItemRule implements QualityRule {
 
-        private int modifier;
+        private int degradingSpeed;
 
-        AbstractDegradingItemRule(int modifier) {
-            this.modifier = modifier;
+        AbstractDegradingItemRule(int degradingSpeed) {
+            this.degradingSpeed = degradingSpeed;
         }
 
         @Override
@@ -96,9 +96,9 @@ class GildedRose {
             item.sellIn = item.sellIn - 1;
             int qualityAfterDegrade;
             if(item.sellIn < 0) {
-                qualityAfterDegrade = item.quality - 2 * modifier;
+                qualityAfterDegrade = item.quality - 2 * degradingSpeed;
             } else {
-                qualityAfterDegrade = item.quality - 1 * modifier;
+                qualityAfterDegrade = item.quality - 1 * degradingSpeed;
             }
             item.quality = qualityAfterDegrade < 0 ? 0 : qualityAfterDegrade;
         }
