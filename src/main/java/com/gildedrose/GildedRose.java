@@ -60,8 +60,7 @@ class GildedRose {
     private static class NormalItemRule implements QualityRule {
         private QualityRule delegate;
         NormalItemRule() {
-            delegate = new AbstractDegradingItemRule(1) {
-            };
+            delegate = new DegradingItemRule(1);
         }
 
         @Override
@@ -73,8 +72,7 @@ class GildedRose {
     private static class ConjuredItemRule implements QualityRule {
         private QualityRule delegate;
         ConjuredItemRule() {
-            delegate = new AbstractDegradingItemRule(2) {
-            };
+            delegate = new DegradingItemRule(2);
         }
 
         @Override
@@ -83,11 +81,11 @@ class GildedRose {
         }
     }
 
-    private static abstract class AbstractDegradingItemRule implements QualityRule {
+    private static class DegradingItemRule implements QualityRule {
 
         private int degradingSpeed;
 
-        AbstractDegradingItemRule(int degradingSpeed) {
+        DegradingItemRule(int degradingSpeed) {
             this.degradingSpeed = degradingSpeed;
         }
 
